@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { Box, Flex } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
@@ -5,6 +6,16 @@ import Footer from './Footer';
 function Layout({ children, noHeader, profile, activityBtn, painel }) {
   return (
     <Box>
+      <Head>
+        <title>Inova</title>
+        <meta property="og:title" content="Inova" />
+        <meta
+          property="og:description"
+          content="Inova - Empoderar gente para transformar realidades: acessibilidade, sustentabilidade e comunicação."
+        />
+        <meta property="og:image" content="images/maratona.png" />
+        <meta property="og:url" content="https://maratona.uaiinovei.com.br/" />
+      </Head>
       <Box
         id="main"
         backgroundColor="var(--wine)"
