@@ -8,6 +8,10 @@ function Layout({ children, noHeader, profile, activityBtn, painel }) {
     <Box>
       <Head>
         <title>Inova</title>
+        <meta
+          name="description"
+          content="Empoderar gente para transformar realidades: acessibilidade, sustentabilidade e comunicação."
+        />
         <meta property="og:title" content="Inova" />
         <meta
           property="og:description"
