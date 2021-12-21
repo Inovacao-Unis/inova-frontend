@@ -12,9 +12,11 @@ import {
   Tab,
   TabPanel,
   useToast,
+  Input,
   Editable,
   EditableInput,
   EditablePreview,
+  Select,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -59,6 +61,7 @@ const PainelAdmin = ({ trail, teams, users, ranking, reload, setReload }) => {
   const [feedback, setFeedback] = useState(null);
   const [title, setTitle] = useState('');
   const [schedule, setSchedule] = useState('');
+  const [type, setType] = useState('');
   const [note, setNote] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [select, setSelect] = useState(null);
@@ -71,7 +74,9 @@ const PainelAdmin = ({ trail, teams, users, ranking, reload, setReload }) => {
   useEffect(() => {
     setTitle(trail.title);
     setSchedule(trail.schedule);
+    setType(trail.type);
     setNote(trail.note);
+    console.log('schedule ', trail.schedule);
   }, [setTitle, setSchedule, setSchedule]);
 
   // eslint-disable-next-line consistent-return
@@ -103,10 +108,24 @@ const PainelAdmin = ({ trail, teams, users, ranking, reload, setReload }) => {
       return null;
     }
 
+    const resultType = type === 'completa' || type === 'maratona';
+
+    console.log('type ', type);
+
+    if (!resultType) {
+      toast({
+        title: 'Por favor, informe o tipo certo',
+        status: 'warning',
+        duration: 3000,
+      });
+      return null;
+    }
+
     await api
       .put(`trail/${trail._id}`, {
         title,
         schedule,
+        type,
         note,
       })
       .then(() => {
@@ -624,67 +643,86 @@ const PainelAdmin = ({ trail, teams, users, ranking, reload, setReload }) => {
             {trail && (
               <Box mt="20px" maxW="400px" mx="auto">
                 <Flex direction="column" mx="auto">
-                  <FormControl pb="10px">
+                  <FormControl maxW="400px" pb="40px">
                     <FormLabel color="black" fontWeight="600" fontSize="1rem">
                       Título da trilha
                     </FormLabel>
-                    <Box mb="5px">
-                      <Editable
-                        border="1px"
-                        borderColor="gray.400"
-                        borderRadius="4px"
-                        color="gray.600"
-                        defaultValue={trail.title}
-                        px="10px"
-                        py="10px"
-                      >
-                        <EditablePreview maxW="100%" w="100%" />
-                        <EditableInput
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                      </Editable>
-                    </Box>
+                    <Input
+                      color="black"
+                      placeholder="Digite o título"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
                   </FormControl>
-                  <FormControl pb="20px">
-                    <FormLabel color="black" fontWeight="600" fontSize="1rem">
+                  <FormControl maxW="400px" pb="40px">
+                    <FormLabel
+                      mb="0"
+                      color="black"
+                      fontWeight="600"
+                      fontSize="1rem"
+                    >
                       Cronograma
                     </FormLabel>
-                    <Box mb="10px">
-                      <Editable
-                        border="1px"
-                        borderColor="gray.400"
-                        borderRadius="4px"
-                        color="gray.600"
-                        defaultValue={trail?.schedule}
-                        px="10px"
-                        py="10px"
-                      >
-                        <EditablePreview maxW="100%" w="100%" />
-                        <EditableInput
-                          onChange={(e) => setSchedule(e.target.value)}
-                        />
-                      </Editable>
-                    </Box>
+                    <FormHelperText mt="0" mb="10px">
+                      Data limite das etapas
+                    </FormHelperText>
+                    <Textarea
+                      minH={120}
+                      color="black"
+                      placeholder="Digite o cronograma"
+                      value={schedule}
+                      onChange={(e) => setSchedule(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormControl maxW="400px" pb="40px">
+                    <FormLabel
+                      mb="0"
+                      color="black"
+                      fontWeight="600"
+                      fontSize="1rem"
+                    >
+                      Nota
+                    </FormLabel>
+                    <FormHelperText mt="0" mb="10px">
+                      Qual o valor dessa atividade
+                    </FormHelperText>
+                    <NumberInput
+                      min={0}
+                      value={note || 0}
+                      onChange={(value) => setNote(value)}
+                      color="black"
+                    >
+                      <NumberInputField color="black" />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
                   </FormControl>
                   <FormControl pb="20px">
                     <FormLabel color="black" fontWeight="600" fontSize="1rem">
-                      Nota
+                      Tipo
                     </FormLabel>
                     <Box mb="10px">
-                      <Editable
-                        border="1px"
-                        borderColor="gray.400"
-                        borderRadius="4px"
-                        color="gray.600"
-                        defaultValue={trail?.note}
-                        px="10px"
-                        py="10px"
+                      <Select
+                        color="black"
+                        onChange={(e) => setType(e.target.value)}
                       >
-                        <EditablePreview maxW="100%" w="100%" />
-                        <EditableInput
-                          onChange={(e) => setNote(e.target.value)}
-                        />
-                      </Editable>
+                        <option
+                          color="black"
+                          selected={type === 'completa'}
+                          value="completa"
+                        >
+                          Completa
+                        </option>
+                        <option
+                          color="black"
+                          selected={type === 'maratona'}
+                          value="maratona"
+                        >
+                          Maratona
+                        </option>
+                      </Select>
                     </Box>
                   </FormControl>
                   <Button

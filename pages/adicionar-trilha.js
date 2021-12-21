@@ -17,6 +17,8 @@ import {
   FormLabel,
   FormHelperText,
   Input,
+  Textarea,
+  Select,
   Checkbox,
   Stack,
   useToast,
@@ -40,6 +42,7 @@ const adicionarAtividade = () => {
   const Router = useRouter();
   const [title, setTitle] = useState('');
   const [schedule, setSchedule] = useState('');
+  const [type, setType] = useState('');
   const [note, setNote] = useState(null);
   const [engenhariaChallenges, setEngenhariaChallenges] = useState({});
   const [saudeChallenges, setSaudeChallenges] = useState({});
@@ -102,6 +105,7 @@ const adicionarAtividade = () => {
     !allCheckedGestao;
 
   const addTrail = async () => {
+    console.log('tipoe ', type);
     const challengesCheked = [];
 
     engenhariaChallenges.challenges.forEach((challenge) => {
@@ -126,6 +130,7 @@ const adicionarAtividade = () => {
       .post('trails', {
         title,
         schedule,
+        type,
         note,
         leaderId: leader,
         challenges: challengesCheked,
@@ -193,7 +198,7 @@ const adicionarAtividade = () => {
             <FormHelperText mt="0" mb="10px">
               Data limite das etapas
             </FormHelperText>
-            <Input
+            <Textarea
               color="black"
               placeholder="Digite o cronograma"
               value={schedule}
@@ -219,6 +224,32 @@ const adicionarAtividade = () => {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
+          </FormControl>
+          <FormControl maxW="400px" pb="40px">
+            <FormLabel mb="0" color="black" fontWeight="600" fontSize="1.4rem">
+              Tipo
+            </FormLabel>
+            <FormHelperText mt="0" mb="10px">
+              Escolha uma opção mais rápida ou completa
+            </FormHelperText>
+            <Box mb="10px">
+              <Select color="black" onChange={(e) => setType(e.target.value)}>
+                <option
+                  color="black"
+                  selected={type === 'completa'}
+                  value="completa"
+                >
+                  Completa
+                </option>
+                <option
+                  color="black"
+                  selected={type === 'maratona'}
+                  value="maratona"
+                >
+                  Maratona
+                </option>
+              </Select>
+            </Box>
           </FormControl>
           <Text color="black" fontWeight="600" fontSize="1.4rem">
             Escolha os desafios:

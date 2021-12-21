@@ -7,6 +7,7 @@ import {
   Heading,
   useToast,
   Text,
+  Textarea,
 } from '@chakra-ui/react';
 import Layout from '@components/Layout';
 import withAuth from '@components/withAuth';
@@ -182,11 +183,20 @@ const Painel = ({ trailData, teamsData, usersData, rankingData }) => {
                 </Flex>
               </Flex>
               <Flex justify="center" align="center" pt="10px">
-                <Flex direction="column" align="center" px="20px">
-                  <Text fontSize="1.1rem" fontWeight="bold">
-                    {trail.schedule || '-'}
+                <Flex direction="column" align="center" px="20px" w="100%">
+                  <Textarea
+                    bg="transparent"
+                    border="none"
+                    textAlign="center"
+                    w="100%"
+                    rows={trail.schedule.length / 10}
+                    resize="none"
+                    placeholder="Digite o cronograma"
+                    value={trail.schedule || '-'}
+                  />
+                  <Text pt="10px" fontSize=".9rem">
+                    Cronograma
                   </Text>
-                  <Text fontSize="1rem">Cronograma</Text>
                 </Flex>
               </Flex>
             </Flex>

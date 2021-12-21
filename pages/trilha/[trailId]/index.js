@@ -40,110 +40,214 @@ const Journey = ({ trail, responses, team, ranking }) => {
     <Layout profile>
       <Container maxW="container.xl" zIndex="800" pb="100px">
         <Flex py={4}>
-          {responses && (
-            <Flex w="100%" flexDirection="column" align="center" flex="1">
-              <Heading
-                fontWeight="700"
-                textAlign="center"
-                mb="20px"
-                display={{ base: 'block', xl: 'none' }}
-              >
-                {trail?.title}
-              </Heading>
-              <Flex w={{ base: '86%', lg: '300px' }} mx="auto" my="50px">
-                <Button
-                  w="100%"
-                  mx="auto"
+          {responses &&
+            (trail.type === 'maratona' ? (
+              <Flex w="100%" flexDirection="column" align="center" flex="1">
+                <Heading
+                  fontWeight="700"
+                  textAlign="center"
                   mb="20px"
-                  bg="white"
-                  size="lg"
-                  _hover={{ bg: 'white' }}
-                  color="highlight"
-                  onClick={onOpenStart}
+                  display={{ base: 'block', xl: 'none' }}
                 >
-                  <FaMapSigns fontSize={30} />
-                  <Text ml="10px">Comece aqui</Text>
-                </Button>
-              </Flex>
-              <Flex
-                onClick={() => Router.push(`/trilha/${trailId}/1`)}
-                cursor="pointer"
-                mr={{ base: '180px', lg: 'auto' }}
-                ml={{ base: 'auto', lg: '180px' }}
-                direction="column"
-                align="center"
-              >
-                <Image
-                  src="/images/planets/1.png"
-                  boxSize={{ base: '100%', lg: '200px' }}
-                />
-                <Text>Planeta 1</Text>
-              </Flex>
-              <Flex
-                onClick={() =>
-                  responses[1] ? Router.push(`/trilha/${trailId}/2`) : null
-                }
-                cursor={responses[1] ? 'pointer' : 'inherit'}
-                mr={{ base: 'auto', lg: '180px' }}
-                ml={{ base: '180px', lg: 'auto' }}
-                direction="column"
-                align="center"
-              >
-                <Image
-                  src="/images/planets/2.png"
-                  boxSize={{ base: '100%', lg: '200px' }}
-                  style={
-                    responses[1]
-                      ? { filter: 'none' }
-                      : { filter: 'grayscale(100%)' }
+                  {trail?.title}
+                </Heading>
+                <Flex w={{ base: '86%', lg: '300px' }} mx="auto" my="50px">
+                  <Button
+                    w="100%"
+                    mx="auto"
+                    mb="20px"
+                    bg="white"
+                    size="lg"
+                    _hover={{ bg: 'white' }}
+                    color="highlight"
+                    onClick={onOpenStart}
+                  >
+                    <FaMapSigns fontSize={30} />
+                    <Text ml="10px">Comece aqui</Text>
+                  </Button>
+                </Flex>
+                <Flex
+                  onClick={() => Router.push(`/trilha/${trailId}/1`)}
+                  cursor="pointer"
+                  mr={{ base: '180px', lg: 'auto' }}
+                  ml={{ base: 'auto', lg: '180px' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/1.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                  />
+                  <Text>Planeta 1</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[1] ? Router.push(`/trilha/${trailId}/2`) : null
                   }
-                />
-                <Text color={responses[1] ? 'white' : 'gray'}>Planeta 2</Text>
-              </Flex>
-              <Flex
-                onClick={() =>
-                  responses[2] ? Router.push(`/trilha/${trailId}/3`) : null
-                }
-                cursor={responses[2] ? 'pointer' : 'inherit'}
-                mr={{ base: '180px', lg: 'auto' }}
-                ml={{ base: 'auto', lg: '180px' }}
-                direction="column"
-                align="center"
-              >
-                <Image
-                  src="/images/planets/3.png"
-                  boxSize={{ base: '100%', lg: '200px' }}
-                  style={
-                    responses[2]
-                      ? { filter: 'none' }
-                      : { filter: 'grayscale(100%)' }
+                  cursor={responses[1] ? 'pointer' : 'inherit'}
+                  mr={{ base: 'auto', lg: '180px' }}
+                  ml={{ base: '180px', lg: 'auto' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/2.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                    style={
+                      responses[1]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[1] ? 'white' : 'gray'}>Planeta 2</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[2] ? Router.push(`/trilha/${trailId}/3`) : null
                   }
-                />
-                <Text color={responses[2] ? 'white' : 'gray'}>Planeta 3</Text>
-              </Flex>
-              <Flex
-                onClick={() =>
-                  responses[3] ? Router.push(`/trilha/${trailId}/4`) : null
-                }
-                cursor={responses[3] ? 'pointer' : 'inherit'}
-                mr={{ base: 'auto', lg: '180px' }}
-                ml={{ base: '180px', lg: 'auto' }}
-                direction="column"
-                align="center"
-              >
-                <Image
-                  src="/images/planets/4.png"
-                  boxSize={{ base: '100%', lg: '240px' }}
-                  style={
-                    responses[3]
-                      ? { filter: 'none' }
-                      : { filter: 'grayscale(100%)' }
+                  cursor={responses[2] ? 'pointer' : 'inherit'}
+                  mr={{ base: '180px', lg: 'auto' }}
+                  ml={{ base: 'auto', lg: '180px' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/3.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                    style={
+                      responses[2]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[2] ? 'white' : 'gray'}>Planeta 3</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[3] ? Router.push(`/trilha/${trailId}/4`) : null
                   }
-                />
-                <Text color={responses[3] ? 'white' : 'gray'}>Planeta 4</Text>
+                  cursor={responses[3] ? 'pointer' : 'inherit'}
+                  mr={{ base: 'auto', lg: '180px' }}
+                  ml={{ base: '180px', lg: 'auto' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/4.png"
+                    boxSize={{ base: '100%', lg: '240px' }}
+                    style={
+                      responses[3]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[3] ? 'white' : 'gray'}>Planeta 4</Text>
+                </Flex>
               </Flex>
-            </Flex>
-          )}
+            ) : (
+              <Flex w="100%" flexDirection="column" align="center" flex="1">
+                <Heading
+                  fontWeight="700"
+                  textAlign="center"
+                  mb="20px"
+                  display={{ base: 'block', xl: 'none' }}
+                >
+                  {trail?.title}
+                </Heading>
+                <Flex w={{ base: '86%', lg: '300px' }} mx="auto" my="50px">
+                  <Button
+                    w="100%"
+                    mx="auto"
+                    mb="20px"
+                    bg="white"
+                    size="lg"
+                    _hover={{ bg: 'white' }}
+                    color="highlight"
+                    onClick={onOpenStart}
+                  >
+                    <FaMapSigns fontSize={30} />
+                    <Text ml="10px">Comece aqui</Text>
+                  </Button>
+                </Flex>
+                <Flex
+                  onClick={() => Router.push(`/trilha/${trailId}/1`)}
+                  cursor="pointer"
+                  mr={{ base: '180px', lg: 'auto' }}
+                  ml={{ base: 'auto', lg: '180px' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/1.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                  />
+                  <Text>Planeta 1</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[1] ? Router.push(`/trilha/${trailId}/2`) : null
+                  }
+                  cursor={responses[1] ? 'pointer' : 'inherit'}
+                  mr={{ base: 'auto', lg: '180px' }}
+                  ml={{ base: '180px', lg: 'auto' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/2.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                    style={
+                      responses[1]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[1] ? 'white' : 'gray'}>Planeta 2</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[2] ? Router.push(`/trilha/${trailId}/3`) : null
+                  }
+                  cursor={responses[2] ? 'pointer' : 'inherit'}
+                  mr={{ base: '180px', lg: 'auto' }}
+                  ml={{ base: 'auto', lg: '180px' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/3.png"
+                    boxSize={{ base: '100%', lg: '200px' }}
+                    style={
+                      responses[2]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[2] ? 'white' : 'gray'}>Planeta 3</Text>
+                </Flex>
+                <Flex
+                  onClick={() =>
+                    responses[3] ? Router.push(`/trilha/${trailId}/4`) : null
+                  }
+                  cursor={responses[3] ? 'pointer' : 'inherit'}
+                  mr={{ base: 'auto', lg: '180px' }}
+                  ml={{ base: '180px', lg: 'auto' }}
+                  direction="column"
+                  align="center"
+                >
+                  <Image
+                    src="/images/planets/4.png"
+                    boxSize={{ base: '100%', lg: '240px' }}
+                    style={
+                      responses[3]
+                        ? { filter: 'none' }
+                        : { filter: 'grayscale(100%)' }
+                    }
+                  />
+                  <Text color={responses[3] ? 'white' : 'gray'}>Planeta 4</Text>
+                </Flex>
+              </Flex>
+            ))}
           <Box w="400px" display={{ base: 'none', xl: 'block' }}>
             {trail && <TrailInfo status={30} trail={trail} team={team} />}
             <Ranking ranking={ranking} teamId={team._id} />
