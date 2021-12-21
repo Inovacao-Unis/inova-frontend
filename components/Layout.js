@@ -13,8 +13,8 @@ function Layout({ children, noHeader, profile, activityBtn, painel }) {
           property="og:description"
           content="Inova - Empoderar gente para transformar realidades: acessibilidade, sustentabilidade e comunicação."
         />
-        <meta property="og:image" content="images/maratona.png" />
-        <meta property="og:url" content="https://maratona.uaiinovei.com.br/" />
+        <meta property="og:image" content="screenshot.png" />
+        <meta property="og:url" content="https://inova.uaiinovei.com.br/" />
       </Head>
       <Box
         id="main"
