@@ -6,15 +6,20 @@ import Link from 'next/link';
 // import ReactMarkdown from 'react-markdown';
 import Short from '@components/Short';
 import api from '@services/api';
-import um from '@content/um.md';
-import dois from '@content/dois.md';
-import tres from '@content/tres.md';
-import quatro from '@content/quatro.md';
+import umCompleta from '@content/completa/um.md';
+import doisCompleta from '@content/completa/dois.md';
+import tresCompleta from '@content/completa/tres.md';
+import quatroCompleta from '@content/completa/quatro.md';
+
+import umMaratona from '@content/maratona/um.md';
+import doisMaratona from '@content/maratona/dois.md';
+import tresMaratona from '@content/maratona/tres.md';
+import quatroMaratona from '@content/maratona/quatro.md';
 
 import Layout from '@components/Layout';
 import { getAPI } from '@services/axios';
 
-export default function BlogPost() {
+export default function BlogPost({ trail }) {
   const Router = useRouter();
   const { trailId, stage } = Router.query;
 
@@ -42,25 +47,47 @@ export default function BlogPost() {
     };
   }, [trailId]);
 
-  function createMarkup(content) {
+  function createMarkupCompleta(content) {
     if (content === '1') {
       return {
-        __html: um,
+        __html: umCompleta,
       };
     }
     if (content === '2') {
       return {
-        __html: dois,
+        __html: doisCompleta,
       };
     }
     if (content === '3') {
       return {
-        __html: tres,
+        __html: tresCompleta,
       };
     }
 
     return {
-      __html: quatro,
+      __html: quatroCompleta,
+    };
+  }
+
+  function createMarkupMaratona(content) {
+    if (content === '1') {
+      return {
+        __html: umMaratona,
+      };
+    }
+    if (content === '2') {
+      return {
+        __html: doisMaratona,
+      };
+    }
+    if (content === '3') {
+      return {
+        __html: tresMaratona,
+      };
+    }
+
+    return {
+      __html: quatroMaratona,
     };
   }
 
@@ -85,17 +112,17 @@ export default function BlogPost() {
             </Box>
             <Text>Planeta {stage}</Text>
             <Box>
-              <div
-                className="archive"
-                dangerouslySetInnerHTML={createMarkup(stage)}
-              >
-                {/* {stage === '1' && <ReactMarkdown>{um}</ReactMarkdown>}
-                {stage === '2' && <ReactMarkdown>{dois}</ReactMarkdown>}
-                {stage === '3' && <ReactMarkdown>{tres}</ReactMarkdown>}
-                {stage === '4' && (
-                  <ReactMarkdown >{quatro}</ReactMarkdown>
-                )} */}
-              </div>
+              {trail.type === 'maratona' ? (
+                <div
+                  className="archive"
+                  dangerouslySetInnerHTML={createMarkupMaratona(stage)}
+                />
+              ) : (
+                <div
+                  className="archive"
+                  dangerouslySetInnerHTML={createMarkupCompleta(stage)}
+                />
+              )}
               <Short stage={stage} trailId={trailId} />
             </Box>
           </Container>
@@ -111,12 +138,15 @@ export async function getServerSideProps(ctx) {
     const { trailId, stage } = ctx.query;
 
     const res = await apiServer.get(`game-responses/${trailId}`);
+    const trail = await apiServer.get(`trail/${trailId}`);
 
     const page = Number(stage);
 
     if (page === 1) {
       return {
-        props: {},
+        props: {
+          trail: trail.data,
+        },
       };
     }
     if (!res.data[page - 1]) {
@@ -129,7 +159,7 @@ export async function getServerSideProps(ctx) {
     }
 
     return {
-      props: {},
+      props: { trail: trail.data },
     };
   } catch (err) {
     return {
