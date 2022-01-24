@@ -22,7 +22,15 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
+import instrucoes from '@content/instrucoes.md';
 import api from '@services/api';
 import { useAuth } from '@contexts/AuthContext';
 import Link from 'next/link';
@@ -31,6 +39,7 @@ import firebase from '../lib/firebase';
 
 export default function Header({ profile, activityBtn, painel }) {
   const Router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { trailId } = Router.query;
   const { user, leader, isAuthenticated } = useAuth();
   const [team, setTeam] = useState({});
@@ -58,6 +67,15 @@ export default function Header({ profile, activityBtn, painel }) {
       getData();
     }
   }, [trailId, user]);
+
+  // eslint-disable-next-line consistent-return
+  function createMarkup(content) {
+    if (content) {
+      return {
+        __html: content,
+      };
+    }
+  }
 
   const deleteAccount = async () => {
     await user
@@ -108,6 +126,16 @@ export default function Header({ profile, activityBtn, painel }) {
           <Spacer />
           {profile ? (
             <Flex align="center">
+              <Button
+                bgColor="highlight"
+                color="white"
+                _hover={{ bg: 'highlight' }}
+                fontSize={['.8rem', '1rem']}
+                mr={{ base: '20px', lg: '3rem' }}
+                onClick={onOpen}
+              >
+                Ajuda
+              </Button>
               <Flex align="center" mr={{ base: '20px', lg: '3rem' }}>
                 <Box maxW="25px" mr="0.5rem">
                   <Image src="/images/pointIcon.png" alt="Ícone dos pontos" />
@@ -116,47 +144,6 @@ export default function Header({ profile, activityBtn, painel }) {
                   {team?.points || '0'}
                 </Text>
               </Flex>
-              {/* <Popover zIndex="999">
-                <PopoverTrigger>
-                  <BellIcon mr="1.5rem" w={8} h={8} cursor="pointer" />
-                </PopoverTrigger>
-                <PopoverContent
-                  zIndex="999"
-                  mt="2"
-                  color="gray.600"
-                  borderColor="#fff"
-                  _focus={{
-                    boxShadow: '0 0 0 3px rgba(0, 0, 0, 0.3)',
-                    outline: '2px solid transparent',
-                  }}
-                >
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader fontWeight="bold">Notificações</PopoverHeader>
-                  <PopoverBody zIndex="999">
-                    <List>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você completou sua jornada!
-                      </ListItem>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você ganhou 30 pontos!
-                      </ListItem>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você ganhou 20 pontos!
-                      </ListItem>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você ganhou 30 pontos!
-                      </ListItem>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você ganhou 20 pontos!
-                      </ListItem>
-                      <ListItem fontSize=".9rem" py=".8rem">
-                        Você começou uma nova jornada!
-                      </ListItem>
-                    </List>
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover> */}
               <Menu>
                 <MenuButton zIndex="999">
                   <Avatar src={team.avatar} bg="transparent" size="md" />
@@ -187,6 +174,16 @@ export default function Header({ profile, activityBtn, painel }) {
           ) : null}
           {activityBtn && (
             <Flex align="center">
+              <Button
+                bgColor="highlight"
+                color="white"
+                _hover={{ bg: 'highlight' }}
+                fontSize={['.8rem', '1rem']}
+                mr={{ base: '20px', lg: '3rem' }}
+                onClick={onOpen}
+              >
+                Ajuda
+              </Button>
               {leader && (
                 <Box>
                   <Link href="/adicionar-trilha">
@@ -290,6 +287,24 @@ export default function Header({ profile, activityBtn, painel }) {
             </Link>
           )}
         </Flex>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>
+              <Box
+                className="archive"
+                dangerouslySetInnerHTML={instrucoes && createMarkup(instrucoes)}
+              />
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="pink" mr={3} onClick={onClose}>
+                Fechar
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Container>
     </Box>
   );
