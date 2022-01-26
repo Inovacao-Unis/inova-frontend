@@ -31,3 +31,27 @@ possuem alguns detalhes:
 - Para inserir vídeos, basta usar o próprio código iframe fornecido por eles ou usar o exemplo abaixo substituindo o código no final, lembrando de alterar o `width` para 100%.
   Exemplo `<iframe width="100%" height="400" src="https://www.youtube.com/embed/dbhxva62f0Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 - Para alterar o estilo dos conteúdos, acesse a pasta `styles`. No arquivo `content.css` existe uma classe CSS `.archive` que é referente aos conteúdos.
+
+# Atualizar desafios
+
+- Listar desafios: GET `http://inova-uaiinovei.herokuapp.com/challenges`
+
+- Atualizar um desafio: PUT `http://inova-uaiinovei.herokuapp.com/challenge/id_do_desafio`
+- Postman - PUT e coloca o conteúdo na aba Body, seleciona raw e muda para JSON
+
+Exemplo
+
+`{ "content": "<p>Algum conteúdo aqui<p>" }`
+
+## Criar desafio
+
+POST `http://inova-uaiinovei.herokuapp.com/challenges`
+
+Campos necessários:
+
+- title
+- categorySlug
+- content
+
+Exemplo
+`{ "title": "BDMG - Desafio 2", "categorySlug": "gestao", "content": "<p>Algum conteúdo aqui</p>" }`
